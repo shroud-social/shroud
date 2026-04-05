@@ -2,7 +2,7 @@ name: Build Shroud Services
 
 on:
   push:
-    branches: [ "main", "cdn" ]
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -24,7 +24,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./shroud-service
           file: ./shroud-service/Dockerfile 
           push: true
           build-args: |

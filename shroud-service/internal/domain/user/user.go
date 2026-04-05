@@ -9,6 +9,7 @@ import (
 
 type User struct {
 	ID       uuid.UUID `json:"id"`
+	RealmID  string    `json:"realm_id"`
 	Username string    `json:"username"`
 
 	// Tags

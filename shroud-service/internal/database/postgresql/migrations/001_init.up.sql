@@ -54,28 +54,123 @@ CREATE TABLE channels (
     image varchar
 );
 
-CREATE TABLE interactions ();
+CREATE TABLE interactions (
+    id uuid PRIMARY KEY,
+    type varchar,
+    name varchar(20),
+    icon uuid,
+    asset varchar
+);
 
-CREATE TABLE users ();
+CREATE TABLE users (
+    id uuid PRIMARY KEY,
+    username varchar(20),
+    tags varchar(15)[],
+    tier uuid,
+    tier_expiry timestamptz
+);
 
-CREATE TABLE credentials ();
+CREATE TABLE user_credentials (
+    id uuid PRIMARY KEY,
+    email varchar,
+    password_hash varchar,
+    mfa_enabled bool,
+    mfa_secret varchar,
+    backup_codes varchar[],
+    passkey_enabled bool,
+    credential_id int8[],
+    public_key int8[],
+    sign_count int,
+    attestation_type varchar
+);
 
-CREATE TABLE profiles ();
+CREATE TABLE user_profiles (
+    id uuid PRIMARY KEY,
+    user_id uuid,
+    nickname varchar(20),
+    pronouns varchar(20),
+    avatar varchar,
+    banner varchar,
+    bio varchar(100),
+    primary_color varchar(6),
+    secondary_color varchar(6),
+    guild_badge uuid
+);
 
-CREATE TABLE devices ();
+CREATE TABLE user_devices (
+    id uuid PRIMARY KEY,
+    user_id uuid,
+    session_id varchar,
+    device_ip varchar,
+    last_active timestamptz,
+    user_agent varchar
+);
 
-CREATE TABLE relationships ();
+CREATE TABLE user_relationships (
+    user_1_id uuid,
+    user_2_id uuid,
+    PRIMARY KEY (user_1_id, user_2_id),
+    status varchar,
+    since timestamptz,
+    channel_id uuid
+);
 
-CREATE TABLE roles ();
+CREATE TABLE guild_invites (
+    id uuid,
+    code varchar,
+    generated_by uuid,
+    generate_at timestamptz,
+    expires_at timestamptz,
+    use_limit int,
+    bypass_application bool
+);
 
-CREATE TABLE members ();
+CREATE TABLE guild_roles (
+    id uuid PRIMARY KEY,
+    guild_id uuid,
+    name varchar(25),
+    color varchar(6),
+    position int,
+    permissions bigint
+);
 
-CREATE TABLE member_roles ();
+CREATE TABLE guild_members (
+    guild_id uuid,
+    user_id uuid,
+    PRIMARY KEY (guild_id,user_id),
 
-CREATE TABLE overrides ();
+    application_status varchar,
+    joined_at timestamptz,
+    join_method varchar,
+    join_link varchar,
+    join_link_generated_by uuid,
 
-CREATE TABLE entitlements ();
+    guild_profile uuid
+);
+
+CREATE TABLE member_roles (
+    user_id uuid,
+    guild_id uuid,
+    role_id uuid,
+    PRIMARY KEY (user_id, guild_id, role_id)
+);
+
+CREATE TABLE channel_overrides (
+    guild_id uuid,
+    channel_id uuid,
+    scope varchar,
+    object_id uuid,
+    permissions_allow bigint,
+
+    PRIMARY KEY (channel_id, scope, object_id)
+);
 
 CREATE TABLE applications ();
 
-CREATE TABLE tiers ();
+CREATE TABLE tiers (
+    id uuid PRIMARY KEY,
+    name varchar(50),
+    badge varchar,
+    tier_expiry timestamptz,
+    upload_size int
+);

@@ -13,5 +13,5 @@ type Profile struct {
 	Bio            string    `json:"bio"`
 	PrimaryColor   string    `json:"primary_color"`
 	SecondaryColor string    `json:"secondary_color"`
-	ServerBadge    uuid.UUID `json:"server_badge"`
+	GuildBadge     uuid.UUID `json:"server_badge"`
 }

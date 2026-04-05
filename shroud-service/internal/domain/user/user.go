@@ -13,8 +13,7 @@ type User struct {
 	Username string    `json:"username"`
 
 	// Tags
-	Tags     []string `json:"tags"`
-	Official bool     `json:"official"`
+	Tags []string `json:"tags"`
 
 	Tier       tier.Tier `json:"tier"`
 	TierExpiry time.Time `json:"tier_expiry"`

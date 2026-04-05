@@ -27,8 +27,7 @@ jobs:
           context: ./shroud-service
           file: ./shroud-service/Dockerfile 
           push: true
-          build-args: |
-            SERVICE_NAME=${{ matrix.service }}
+          build-args: SERVICE_NAME=${{ matrix.service }}
           tags: |
             ghcr.io/${{ github.repository }}/${{ matrix.service }}:latest
             ghcr.io/${{ github.repository }}/${{ matrix.service }}:${{ github.sha }}

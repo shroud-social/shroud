@@ -1,0 +1,92 @@
+syntax = "proto3";
+
+package shroud.v1;
+
+message Guild {
+  bytes id = 1;
+  bytes realm_id = 2;
+  bytes owner_id = 3;
+  int64 creation_time = 4;
+  bool nsfw = 5;
+
+  string name = 10;
+  string description = 11;
+  string icon = 12;
+  string banner = 13;
+  string invite_background = 14;
+  repeated string tags = 15;
+  bool html_widget = 16;
+
+  GuildBadge badge = 17;
+
+  bytes tier_id = 18;
+
+  Configuration config = 25;
+}
+
+message Configuration {
+  string welcome_message = 1;
+  string support_message = 2;
+  bool user_feed = 3;
+  bool notifications_all = 4;
+
+  bytes realm_general_notification_channel = 10;
+  bytes realm_moderation_notification_channel = 11;
+
+  AccessType access_type = 12;
+  repeated ApplicationQuestion application_questions = 13;
+
+  bytes suspicious_activity_notification_channel = 14;
+  VerificationLevel verification_level = 15;
+  bool allow_dms_from_suspicious = 16;
+  bool allow_dms_from_unknown = 17;
+  bool require_moderator_2fa = 18;
+
+  repeated AutoModRule auto_mod_rules = 19;
+  bool content_filter = 20;
+}
+
+message GuildBadge {
+  string name = 1;
+  string icon = 2;
+}
+
+message ApplicationQuestion {
+  QuestionType type = 1;
+  string question = 2;
+  bool optional = 3;
+  repeated string options = 4;
+  int32 answer_limit = 5;
+}
+
+message AutoModRule {
+  string word_match = 1;
+  string regex_pattern = 2;
+  string exclude_words = 3;
+
+  bool block_event = 10;
+  bytes alert_channel = 11;
+  repeated bytes exclude_roles = 12;
+  bool apply_to_names = 13;
+  bool apply_to_nicknames = 14;
+  bool apply_to_chats = 15;
+}
+
+enum AccessType {
+  INVITE_ONLY = 0;
+  APPLICATION = 1;
+  OPEN = 2;
+}
+
+enum VerificationLevel {
+  NONE = 0;
+  LOW = 1;
+  MEDIUM = 2;
+  HIGH = 3;
+}
+
+enum QuestionType {
+  SHORT = 0;
+  LONG = 1;
+  MULTIPLE_CHOICE = 2;
+}

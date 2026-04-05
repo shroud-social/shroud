@@ -6,30 +6,45 @@ import (
 	"github.com/google/uuid"
 )
 
-type Type string
+type ChannelType string
 
 const (
-	TypeText   Type = "TEXT"
-	TypeVoice  Type = "VOICE"
-	TypeForum  Type = "FORUM"
-	TypeThread Type = "THREAD"
-	TypeDM     Type = "DM"
-	TypeGroup  Type = "GROUP"
+	TypeText   ChannelType = "TEXT"
+	TypeVoice  ChannelType = "VOICE"
+	TypeForum  ChannelType = "FORUM"
+	TypeThread ChannelType = "THREAD"
+	TypeDM     ChannelType = "DM"
+	TypeGroup  ChannelType = "GROUP"
+)
+
+type ForumDefaultLayout string
+
+const (
+	LayoutList ForumDefaultLayout = "LIST"
+	LayoutGrid ForumDefaultLayout = "GRID"
+)
+
+type ForumDefaultOrder string
+
+const (
+	OrderActivity ForumDefaultOrder = "ACTIVITY"
+	OrderCreation ForumDefaultOrder = "CREATION"
 )
 
 type Channel struct {
-	ChannelId uuid.UUID `json:"channel_id"`
-	ParentId  uuid.UUID `json:"parent_id"`
-	GuildId   uuid.UUID `json:"guild_id"`
+	ID       uuid.UUID `json:"channel_id"`
+	ParentID uuid.UUID `json:"parent_id"`
+	GuildID  uuid.UUID `json:"guild_id"`
 
+	CreatorID    uuid.UUID `json:"creator_id"`
 	CreationTime time.Time `json:"creation_time"`
 
 	Name     string `json:"name"`
-	Type     string `json:"type"`
 	NSFW     bool   `json:"nsfw"`
 	Slowmode uint32 `json:"slowmode"`
 
 	// Type Specific
+	Type ChannelType `json:"type"`
 
 	// Type: Text
 	Topic string `json:"topic"`
@@ -37,12 +52,11 @@ type Channel struct {
 	Bitrate   uint32 `json:"bitrate"`
 	UserLimit uint32 `json:"user_limit"`
 	// Type: Forum
-	Tags          []ForumTag `json:"tags"`
-	DefaultLayout string     `json:"default_layout"`
-	DefaultOrder  string     `json:"default_order"`
+	Tags          []ForumTag         `json:"tags"`
+	DefaultLayout ForumDefaultLayout `json:"default_layout"`
+	DefaultOrder  ForumDefaultOrder  `json:"default_order"`
 	// Type: Thread
-	Locked  bool `json:"locked"`
-	Private bool `json:"private"`
+	Locked bool `json:"locked"`
 	// Type: DM
 
 	// Type: Group
@@ -50,7 +64,7 @@ type Channel struct {
 }
 
 type ForumTag struct {
-	Icon          string `json:"icon"`
-	Name          string `json:"name"`
-	ModeratorOnly bool   `json:"moderator_only"`
+	Icon          uuid.UUID `json:"icon"`
+	Name          string    `json:"name"`
+	ModeratorOnly bool      `json:"moderator_only"`
 }

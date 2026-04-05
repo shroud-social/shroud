@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package shroud.v1;
+
+message Message {
+  bytes id = 1;
+  bytes channel_id = 2;
+  bytes guild_id = 3;
+  bytes author_id = 4;
+  AuthorType author_type = 5;
+
+  oneof data {
+    MessageType type = 20;
+    PersistedMessage persisted = 21;
+    ClientMessage client = 22;
+  }
+}
+
+message PersistedMessage {
+  bool is_pinned = 2;
+  bytes replies_to = 3;
+  oneof data {
+    TextPayload text = 20;
+    StickerPayload sticker = 21;
+    VoicePayload voice = 22;
+  }
+}
+
+message ClientMessage {
+  string source = 1;
+  string type = 2;
+  bytes payload = 3;
+}
+
+message TextPayload {
+  string content = 1;
+  repeated string attachments = 2;
+  repeated string embeds = 3;
+  bool is_tts = 4;
+}
+
+message StickerPayload {
+  bytes sticker_id = 1;
+}
+
+message VoicePayload {
+  string voice = 1;
+}
+
+message MessageIngress {
+  Message message = 1;
+}
+
+message MessageDispatch {
+  Message message = 1;
+  int64 sent_at = 2;
+  repeated bytes mentions_roles = 3;
+  repeated bytes mentions_users = 4;
+  bool has_image = 5;
+  bool has_video = 6;
+  bool has_link = 7;
+  bool has_sound = 8;
+  bool is_forwarded = 9;
+}
+
+message MessageFetch {
+  MessageDispatch message = 1;
+  int64 bucket = 2;
+  int64 sequence = 3;
+}
+
+enum AuthorType {
+  USER = 0;
+  BOT = 1;
+  WEBHOOK = 2;
+}
+
+enum MessageType {
+  TEXT = 0;
+  STICKER = 1;
+  VOICE = 2;
+}

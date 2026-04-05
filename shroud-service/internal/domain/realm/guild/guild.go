@@ -23,9 +23,18 @@ const (
 	VerificationLevelHigh   VerificationLevel = "HIGH"
 )
 
+type QuestionType string
+
+const (
+	QuestionTypeShort          QuestionType = "SHORT"
+	QuestionTypeLong           QuestionType = "LONG"
+	QuestionTypeMultipleChoice QuestionType = "MULTIPLE_CHOICE"
+)
+
 // Guild represents a community and its associated configuration
 type Guild struct {
 	ID      uuid.UUID `json:"id"`
+	RealmID uuid.UUID `json:"realm_id"`
 	OwnerID uuid.UUID `json:"owner_id"`
 
 	CreationTime time.Time `json:"creation_time"`
@@ -40,6 +49,10 @@ type Guild struct {
 	InviteBackground string   `json:"invite_background"`
 	Tags             []string `json:"tags"`
 	HTMLWidget       bool     `json:"html_widget"`
+
+	badge GuildBadge `json:"badge"`
+
+	Tier guild.Tier `json:"tier"`
 
 	// Engagement
 	WelcomeMessage   string `json:"welcome_message"` // if blank, random
@@ -75,9 +88,9 @@ type GuildBadge struct {
 
 // ApplicationQuestion represents a question a prospective user might answer to join a guild
 type ApplicationQuestion struct {
-	Type     string `json:"type"`
-	Question string `json:"text"`
-	Optional bool   `json:"optional"`
+	Type     QuestionType `json:"type"`
+	Question string       `json:"text"`
+	Optional bool         `json:"optional"`
 
 	// Type: Multiple Choice
 	Options     []string `json:"options"`
@@ -90,8 +103,8 @@ type AutoModRule struct {
 	RegexPattern string `json:"regex_pattern"`
 	ExcludeWords string `json:"exceptions"`
 
-	BlockEvent       bool   `json:"block_event"`
-	SendAlertChannel string `json:"send_alert"` // If blank, no alert
+	BlockEvent   bool      `json:"block_event"`
+	AlertChannel uuid.UUID `json:"send_alert"` // If blank, no alert
 
 	ExcludeRoles []string `json:"exclude_roles"`
 

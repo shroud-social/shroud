@@ -17,7 +17,7 @@ type UserEventType EventType
 type Event struct {
 	ID        uuid.UUID `json:"id"`
 	Timestamp time.Time `json:"timestamp"`
-	Penalty   uint32    `json:"penalty"`
+	Penalty   int32     `json:"penalty"`
 }
 
 type RealmEvent struct {

@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package shroud.v1;
+
+message Device {
+  bytes id = 1;
+  bytes user_id = 2;
+  string session_id = 3;
+  string device_ip = 4;
+  int64 last_active = 5;
+  string user_agent = 6;
+}

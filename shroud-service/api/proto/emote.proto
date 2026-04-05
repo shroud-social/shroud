@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package shroud.v1;
+
+message Emote {
+  bytes id = 1;
+  string name = 2;
+  string image = 3;
+}

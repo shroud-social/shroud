@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package shroud.v1;
+
+message Invite {
+  bytes id = 1;
+  bytes channel_id = 2;
+  bytes guild_id = 3;
+  bytes realm_id = 4;
+  string code = 5;
+  bytes generated_by = 10;
+  int64 generated_at = 11;
+  int64 expires_at = 12;
+  int32 invite_limit = 20;
+  int32 uses = 21;
+  bool bypass_application = 25;
+}

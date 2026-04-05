@@ -62,17 +62,58 @@ CREATE TABLE interactions (
     asset varchar
 );
 
-CREATE TABLE users ();
-
-CREATE TABLE user_credentials (
-    id uuid
+CREATE TABLE users (
+    id uuid PRIMARY KEY,
+    username varchar(20),
+    tags varchar(15)[],
+    tier uuid,
+    tier_expiry timestamptz
 );
 
-CREATE TABLE user_profiles ();
+CREATE TABLE user_credentials (
+    id uuid PRIMARY KEY,
+    email varchar,
+    password_hash varchar,
+    mfa_enabled bool,
+    mfa_secret varchar,
+    backup_codes varchar[],
+    passkey_enabled bool,
+    credential_id int8[],
+    public_key int8[],
+    sign_count int,
+    attestation_type varchar
+);
 
-CREATE TABLE user_devices ();
+CREATE TABLE user_profiles (
+    id uuid PRIMARY KEY,
+    user_id uuid,
+    nickname varchar(20),
+    pronouns varchar(20),
+    avatar varchar,
+    banner varchar,
+    bio varchar(100),
+    primary_color varchar(6),
+    secondary_color varchar(6),
+    guild_badge uuid
+);
 
-CREATE TABLE user_relationships ();
+CREATE TABLE user_devices (
+    id uuid PRIMARY KEY,
+    user_id uuid,
+    session_id varchar,
+    device_ip varchar,
+    last_active timestamptz,
+    user_agent varchar
+);
+
+CREATE TABLE user_relationships (
+    user_1_id uuid,
+    user_2_id uuid,
+    PRIMARY KEY (user_1_id, user_2_id),
+    status varchar,
+    since timestamptz,
+    channel_id uuid
+);
 
 CREATE TABLE guild_invites (
     id uuid,
@@ -98,8 +139,6 @@ CREATE TABLE guild_members (
     user_id uuid,
     PRIMARY KEY (guild_id,user_id),
 
-    role_ids uuid[],
-
     application_status varchar,
     joined_at timestamptz,
     join_method varchar,
@@ -113,17 +152,17 @@ CREATE TABLE member_roles (
     user_id uuid,
     guild_id uuid,
     role_id uuid,
-    PRIMARY KEY (user_id, guild_id)
+    PRIMARY KEY (user_id, guild_id, role_id)
 );
 
 CREATE TABLE channel_overrides (
     guild_id uuid,
     channel_id uuid,
-    PRIMARY KEY (guild_id,channel_id),
-
     scope varchar,
     object_id uuid,
-    permissions_allow bigint
+    permissions_allow bigint,
+
+    PRIMARY KEY (channel_id, scope, object_id)
 );
 
 CREATE TABLE applications ();
@@ -135,3 +174,13 @@ CREATE TABLE tiers (
     tier_expiry timestamptz,
     upload_size int
 );
+
+CREATE TABLE uploads (
+    id uuid PRIMARY KEY,
+    type varchar,
+    path varchar,
+    size int,
+    hash varchar,
+    uploaded_on timestamptz,
+    uploaded_by uuid
+)

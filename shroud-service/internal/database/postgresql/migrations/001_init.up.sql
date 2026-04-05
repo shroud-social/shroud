@@ -174,3 +174,13 @@ CREATE TABLE tiers (
     tier_expiry timestamptz,
     upload_size int
 );
+
+CREATE TABLE uploads (
+    id uuid PRIMARY KEY,
+    type varchar,
+    path varchar,
+    size int,
+    hash varchar,
+    uploaded_on timestamptz,
+    uploaded_by uuid
+)

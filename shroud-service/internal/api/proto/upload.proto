@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package shroud.v1;
+
+message Upload {
+  bytes id = 1;
+  string type = 2;
+  string path = 3;
+  int32 size = 4;
+  string hash = 5;
+  int64 uploaded_on = 6;
+  bytes uploaded_by = 7;
+}

@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	environment, err := config.LoadEnvironment()
+	environment, err := config.Load[config.SatelliteEnvironment]()
 	if err != nil {
 		panic(err)
 	}

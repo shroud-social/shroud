@@ -1,7 +1,7 @@
 package user
 
 import (
-	"services/internal/domain/user/tier"
+	"services/internal/domain/realm/user/tier"
 	"time"
 
 	"github.com/google/uuid"

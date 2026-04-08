@@ -100,15 +100,15 @@ async function onOriginRequest(context: { request: Request }): Promise<Response>
             });
             if (storageRequest.ok) {
                 const receipt = await new SignJWT({
-                    path: payload.path,
-                    hash: payload.hash,
+                    upload_type: payload.upload_type,
+                    guild_id: payload.guild_id,
+                    channel_id: payload.channel_id,
+                    file_name: payload.file_name,
                     size: payload.size,
+                    hash: payload.hash,
                     upload_id: payload.upload_id,
                     user_id: payload.user_id,
-                    channel_id: payload.channel_id,
-                    guild_id: payload.guild_id,
-                    file_name: payload.file_name,
-                    upload_type: payload.upload_type
+                    path: payload.path
                 })
                     .setProtectedHeader({ alg: 'HS256' })
                     .setIssuedAt()

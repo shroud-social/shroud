@@ -3,7 +3,7 @@ package member
 import (
 	"services/internal/domain/realm/guild"
 	"services/internal/domain/realm/guild/role"
-	"services/internal/domain/user"
+	"services/internal/domain/realm/user"
 	"time"
 
 	"github.com/google/uuid"

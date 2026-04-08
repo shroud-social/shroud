@@ -1,4 +1,4 @@
-package api
+package v1
 
 import (
 	"net/http"
@@ -19,7 +19,7 @@ type Claims struct {
 	jwt.RegisteredClaims
 }
 
-func Middleware() gin.HandlerFunc {
+func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenString := c.GetHeader("Authorization")
 		if tokenString == "" {

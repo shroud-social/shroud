@@ -63,7 +63,7 @@ jobs:
           context: ./shroud-service
           file: ./shroud-service/Dockerfile 
           push: true
-          build-args: SERVICE_NAME=${{ matrix.service }}
+          build-args: SERVICE_NAME=${{ matrix.path }}
           tags: |
             ghcr.io/${{ github.repository }}/${{ matrix.service }}:${{ github.sha }}
             eu-west9-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/shroud-repo/${{ matrix.service }}:${{ github.sha }}

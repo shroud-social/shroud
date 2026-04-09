@@ -1,8 +1,8 @@
 name: build-docker-images
 
 on:
-  push:
-    branches: [ "main" ]
+  release:
+    types: [published]
 
 permissions: 
   contents: read
@@ -65,5 +65,7 @@ jobs:
           push: true
           build-args: SERVICE_NAME=${{ matrix.path }}
           tags: |
-            ghcr.io/${{ github.repository }}/${{ matrix.service }}:${{ github.sha }}
+            ghcr.io/${{ github.repository }}/${{ matrix.service }}:latest
+            ghcr.io/${{ github.repository }}/${{ matrix.service }}:${{ github.ref_name }}
+            europe-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/shroud-repo/${{ matrix.service }}:latest
             europe-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/shroud-repo/${{ matrix.service }}:${{ github.sha }}

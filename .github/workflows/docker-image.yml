@@ -60,7 +60,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: ./shroud-service
+          context: .
           file: ./shroud-service/Dockerfile 
           push: true
           build-args: SERVICE_NAME=${{ matrix.service }}

@@ -43,6 +43,7 @@ jobs:
 
       # GCR
       - name: Authenticate to GCR
+        id: auth
         uses: google-github-actions/auth@v2
         with:
           token_format: 'access_token'
